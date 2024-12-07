@@ -32,7 +32,7 @@ if [ "$categorie" -eq 1 ]; then
     if [ "$choix" -eq 1 ]; then
         apocker
     elif [ "$choix" -eq 2 ]; then
-        setup
+        compose
     elif [ "$choix" -eq 3 ]; then
         pma
     elif [ "$choix" -eq 4 ]; then
