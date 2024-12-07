@@ -30,9 +30,9 @@ if [ "$categorie" -eq 1 ]; then
     echo -e "  ${RED}6)${NC} Supprimer une ${GREEN}image Docker${NC}"
     read -p "Entrez le numéro de votre choix : " choix
     if [ "$choix" -eq 1 ]; then
-        ct-httpd
+        apocker
     elif [ "$choix" -eq 2 ]; then
-        ct-setup
+        setup
     elif [ "$choix" -eq 3 ]; then
         pma
     elif [ "$choix" -eq 4 ]; then
@@ -60,17 +60,16 @@ elif [ "$categorie" -eq 2 ]; then
     echo -e "  ${RED}7)${NC} Recréer les ${GREEN}conteneurs arrêtés${NC} basés sur le fichier de configuration"
     read -p "Entrez le numéro de votre choix : " choix
     if [ "$choix" -eq 1 ]; then
-        ct-connect
+        ssh_ct
     elif [ "$choix" -eq 2 ]; then
-        ct-start
+        start
     elif [ "$choix" -eq 3 ]; then
-        dt-stop
+        stop
     elif [ "$choix" -eq 4 ]; then
         linux
     elif [ "$choix" -eq 5 ]; then
         network
     elif [ "$choix" -eq 6 ]; then
-        confirm
         docker container prune -f
     elif [ "$choix" -eq 7 ]; then
         docker-compose up -d
