@@ -1,0 +1,9 @@
+
+2000 a 2999=sftp/ssh
+
+4000 a 4999=https
+5000 a 5999=sql
+6000 a 6999=phpmyadmin
+7000 a 7999 ftp
+8000 a 8999=apche
+
