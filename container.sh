@@ -68,7 +68,7 @@ elif [ "$categorie" -eq 2 ]; then
     elif [ "$choix" -eq 4 ]; then
         linux
     elif [ "$choix" -eq 5 ]; then
-        docker network prune -f
+        network
     elif [ "$choix" -eq 6 ]; then
         confirm
         docker container prune -f

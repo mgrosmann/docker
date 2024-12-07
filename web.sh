@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Installer Flask si non installé
+apt install pip
 if ! pip show flask &> /dev/null; then
     echo "Flask n'est pas installé. Installation..."
     pip install flask
