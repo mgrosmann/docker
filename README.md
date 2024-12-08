@@ -1,6 +1,4 @@
-project script docker en developpement
-pour installer:
-
-wget https://github.com/mgrosmann/docker/blob/main/setup.sh
-
-chmod +x setup.sh && bash setup.sh
+git clone https://github.com/mgrosmann/docker.git
+cd docker
+chmod +x bin.sh && install.sh
+bash bin.sh
