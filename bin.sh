@@ -33,6 +33,8 @@ done
 apt install libapache2-mod-php
 mkdir /var/www/docker
 mv *.php /var/www/docker
+usermod -aG docker www-data
+sudo chmod 666 /var/run/docker.sock
 cd /etc/apache2/sites-available
 cat <<EOF > docker.conf
 <VirtualHost *:9003>
