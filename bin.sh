@@ -28,7 +28,7 @@ mkdir /var/www/docker
 mv *.php /var/www/docker
 cd /etc/apache2/sites-available
 cat <<EOF > docker.conf
-<VirtualHost *:9999>
+<VirtualHost *:9003>
     ServerAdmin webmaster@localhost
     DocumentRoot /var/www/docker
     ErrorLog \${APACHE_LOG_DIR}/error.log
@@ -36,9 +36,9 @@ cat <<EOF > docker.conf
 </VirtualHost>
 EOF
 cd /etc/apache2/
-echo "Listen 9999" >> ports.conf
+echo "Listen 9003" >> ports.conf
 a2ensite docker
 systemctl restart apache2
 systemctl reload apache2
-echo "l'interface web est maintenant pres veuillez vous rendre sur localhost:9999"
+echo "l'interface web est maintenant pres veuillez vous rendre sur localhost:9003"
 echo "lancer la commande 'container'"
