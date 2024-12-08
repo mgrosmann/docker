@@ -24,5 +24,6 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo systemctl start docker
 sudo systemctl enable docker
+usermod -aG docker www-data
 sudo usermod -aG docker ${USER}
 echo "Docker a été installé et configuré avec succès. Veuillez vous déconnecter et vous reconnecter pour appliquer les changements de groupe."
