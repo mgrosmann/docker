@@ -9,6 +9,12 @@ then
     sudo apt-get install -y dos2unix
 else
     echo "dos2unix est déjà installé."
+    fi
+if ! command -v apache2 &> /dev/null
+then
+    sudo apt-get install -y apache2
+else
+    echo "dos2unix est déjà installé."
 fi
 if ! command -v docker &> /dev/null
 then
