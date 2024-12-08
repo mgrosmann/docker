@@ -30,6 +30,7 @@ for script in *.sh
 do
   mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
 done
+apt install libapache2-mod-php
 mkdir /var/www/docker
 mv *.php /var/www/docker
 cd /etc/apache2/sites-available
