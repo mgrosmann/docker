@@ -35,7 +35,6 @@ cat <<EOF > docker.conf
     CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 EOF
-mkdir /var/www/docker
 cd /etc/apache2/
 echo "Listen 9999" >> ports.conf
 a2ensite docker
