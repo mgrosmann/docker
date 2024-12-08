@@ -17,7 +17,7 @@ echo -e "${LIGHT_GREEN}Veuillez choisir une catégorie :${NC}"
 echo -e "${RED}1)${NC} Création/installation de conteneurs"
 echo -e "${RED}2)${NC} Gestion des conteneurs existants"
 echo -e "${RED}3)${NC} Outils de gestion Docker"
-echo -e "Vous pouvez egalement vous rendre sur l'${RED}interface web${NC} au port ${RED}9999${NC}"
+echo -e "Vous pouvez egalement vous rendre sur l'${RED}interface web${NC} au port ${RED}9003${NC}"
 read -p "Entrez le numéro de votre choix : " categorie
 
 # Selon le choix de catégorie
