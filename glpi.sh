@@ -44,11 +44,10 @@ networks:
   network_$name:
     driver: bridge
 EOF
+docker compose -f "docker-$name.yaml" up -d
 mysql -u root -p -P $port_sql <<EOF
 CREATE DATABASE glpi;
 CREATE USER 'glpi'@'localhost' IDENTIFIED BY 'glpi';
 GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost';
 FLUSH PRIVILEGES;
-EXIT;
 EOF
-docker compose -f "docker-$name.yaml" up -d
