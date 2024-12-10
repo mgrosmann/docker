@@ -45,7 +45,7 @@ networks:
     driver: bridge
 EOF
 docker compose -f "docker-$name.yaml" up -d
-mysql -u root -p -P $port_sql <<EOF
+mysql -u root -p -P$port_sql <<EOF
 CREATE DATABASE glpi;
 CREATE USER 'glpi'@'localhost' IDENTIFIED BY 'glpi';
 GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost';
