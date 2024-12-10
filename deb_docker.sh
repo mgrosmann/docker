@@ -25,5 +25,3 @@ sudo systemctl enable docker
 # Ajouter l'utilisateur actuel au groupe Docker
 sudo usermod -aG docker ${USER}
 sudo usermod -aG docker www-data
-
-echo "Docker a Ã©tÃ© installÃ© et configurÃ© avec succÃ¨s. Veuillez vous dÃ©connecter et vous reconnecter pour appliquer les changements de groupe."
