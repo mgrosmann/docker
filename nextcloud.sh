@@ -48,4 +48,4 @@ networks:
     driver: bridge
 EOF
 
-docker-compose -f "docker-$name.yaml" up -d
+docker compose -f "docker-$name.yaml" up -d
