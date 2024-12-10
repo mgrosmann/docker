@@ -22,12 +22,3 @@ networks:
 EOL
 
 docker compose -f "docker-$name.yaml" up -d
-
-# Initialiser les privilèges de la base de données pour Nextcloud
-sleep 20 # Attendre que les conteneurs soient complètement démarrés
-
-docker exec -i db_$name mysql -u root -p$root <<EOF
-GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'%';
-FLUSH PRIVILEGES;
-EXIT;
-EOF
