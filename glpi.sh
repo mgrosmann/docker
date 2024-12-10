@@ -1,5 +1,4 @@
 #!/bin/bash
-
 read -p "Port MySQL: " port_sql
 read -p "Port phpMyAdmin: " port_pma
 read -p "Port GLPI: " port_glpi
@@ -30,7 +29,7 @@ services:
       - network_$name
 
   glpi_$name:
-    image: diouxx/glpi
+    image: elestio/glpi:latest
     container_name: glpi_$name
     restart: always
     hostname: glpi
@@ -38,10 +37,6 @@ services:
       - "$port_glpi:80"
     environment:
       - TIMEZONE=Europe/Brussels
-      - MYSQL_PASSWORD=glpi
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=glpi
-      - MYSQL_HOST=db_$name
     networks:
       - network_$name
 
@@ -49,6 +44,11 @@ networks:
   network_$name:
     driver: bridge
 EOF
-
-# Run Docker Compose
+mysql -u root -p -P $port_sql <<EOF
+CREATE DATABASE glpi;
+CREATE USER 'glpi'@'localhost' IDENTIFIED BY 'glpi';
+GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+EOF
 docker compose -f "docker-$name.yaml" up -d
