@@ -42,6 +42,6 @@ echo "Listen 9003" >> ports.conf
 a2ensite docker
 systemctl restart apache2
 systemctl reload apache2
-ip= hostname -I | awk '{print $1}'
-echo "l'interface web est maintenant pres veuillez vous rendre sur $ip:9003"
+ip=$(hostname -I | awk '{print $1}')
+echo "L'interface web est maintenant prête. Veuillez vous rendre sur http://$ip:9003"
 echo "lancer la commande 'container' pour lancer l'outil centralisé"
