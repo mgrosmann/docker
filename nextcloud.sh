@@ -47,6 +47,7 @@ networks:
   network_$name:
     driver: bridge
 EOF
+docker compose -f "docker-$name.yaml" up -d
 mysql -u root -p -P $port_sql <<EOF
 CREATE DATABASE nextcloud;
 CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'nextcloud';
@@ -54,4 +55,3 @@ GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 EOF
-docker compose -f "docker-$name.yaml" up -d
