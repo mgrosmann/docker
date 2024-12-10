@@ -18,14 +18,6 @@ then
 else
     echo "dos2unix est déjà installé."
 fi
-if ! command -v docker &> /dev/null
-then
-    chmod +x install.sh
-    bash install.sh
-else
-    echo "docker est déjà installé."
-fi
-cd docker
 chmod +x *.sh
 dos2unix *.sh
 for script in *.sh
