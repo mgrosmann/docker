@@ -36,7 +36,7 @@ services:
     ports:
       - "$port_nextcloud:80"
     environment:
-      - MYSQL_PASSWORD=$root
+      - MYSQL_PASSWORD=nextcloud
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
       - MYSQL_HOST=db_$name
@@ -48,9 +48,3 @@ networks:
     driver: bridge
 EOF
 docker compose -f "docker-$name.yaml" up -d
-mysql -u root -p -P$port_sql <<EOF
-CREATE DATABASE nextcloud;
-CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'nextcloud';
-GRANT ALL PRIVILEGES ON nextcloud.* TO 'nextcloud'@'localhost';
-FLUSH PRIVILEGES;
-EOF
