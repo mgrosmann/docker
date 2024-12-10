@@ -1,4 +1,5 @@
 #!/bin/bash
+
 read -p "Port MySQL: " port_sql
 read -p "Port phpMyAdmin: " port_pma
 read -p "Port GLPI: " port_glpi
@@ -29,7 +30,7 @@ services:
       - network_$name
 
   glpi_$name:
-    image: elestio/glpi:latest
+    image: diouxx/glpi
     container_name: glpi_$name
     restart: always
     hostname: glpi
@@ -48,4 +49,6 @@ networks:
   network_$name:
     driver: bridge
 EOF
+
+# Run Docker Compose
 docker compose -f "docker-$name.yaml" up -d
