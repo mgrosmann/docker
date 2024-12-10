@@ -37,6 +37,10 @@ services:
       - "$port_glpi:80"
     environment:
       - TIMEZONE=Europe/Brussels
+      - MYSQL_PASSWORD=glpi
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=glpi
+      - MYSQL_HOST=db_$name
     networks:
       - network_$name
 
@@ -45,9 +49,3 @@ networks:
     driver: bridge
 EOF
 docker compose -f "docker-$name.yaml" up -d
-mysql -u root -p -P$port_sql <<EOF
-CREATE DATABASE glpi;
-CREATE USER 'glpi'@'localhost' IDENTIFIED BY 'glpi';
-GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost';
-FLUSH PRIVILEGES;
-EOF
