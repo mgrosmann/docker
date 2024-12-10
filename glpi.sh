@@ -5,13 +5,16 @@ read -p "Port GLPI: " port_glpi
 read -p "Nom du projet: " name
 read -p "Mot de passe du compte root: " root
 
-cat <<EOF > docker-$name.yaml
+cat > docker-$name.yaml <<EOL
 services:
   mysql_$name:
     image: mysql
     container_name: db_$name
     environment:
       MYSQL_ROOT_PASSWORD: $root
+      MYSQL_DATABASE: glpi
+      MYSQL_USER: glpi
+      MYSQL_PASSWORD: glpi
     ports:
       - "$port_sql:3306"
     networks:
@@ -43,11 +46,6 @@ services:
 networks:
   network_$name:
     driver: bridge
-EOF
+EOL
+
 docker compose -f "docker-$name.yaml" up -d
-mysql -u root -p -P $port_sql <<EOF
-CREATE DATABASE glpi;
-CREATE USER 'glpi'@'localhost' IDENTIFIED BY 'glpi';
-GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'localhost';
-FLUSH PRIVILEGES;
-EOF
