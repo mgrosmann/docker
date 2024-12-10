@@ -22,26 +22,23 @@ read -p "Entrez le numéro de votre choix : " categorie
 # Selon le choix de catégorie
 if [ "$categorie" -eq 1 ]; then
     echo -e "\n${LIGHT_GREEN}Création/installation de conteneurs :${NC}"
-    echo -e "  ${RED}1)${NC} Créer un nouveau ${GREEN}conteneur${NC} avec l'image ${BLUE}HTTPD${NC} ou en modifier un ${GREEN}existant${NC}"
+    echo -e "  ${RED}1)${NC} Créer un nouveau ${GREEN}conteneur${NC} avec fichier yaml"
     echo -e "  ${RED}2)${NC} Installer le ${GREEN}conteneur multi-service${NC} (${PINK}MySQL${NC}, ${GRAY}phpMyAdmin${NC}, ${ORANGE}FTP${NC}, ${LIGHT_BLUE}APACHE${NC})"
-    echo -e "  ${RED}3)${NC} Créer un nouveau ${GREEN}conteneur${NC} avec l'image ${PINK}MySQL${NC} et ${GRAY}phpMyAdmin${NC}"
-    echo -e "  ${RED}4)${NC} Installer un ${GREEN}conteneur${NC} (${PINK}MySQL${NC}, ${BLUE}HTTPD${NC}, ${GRAY}phpMyAdmin${NC}) en ${RED}session interactive${NC} ou ${ORANGE}détaché${NC}"
-    echo -e "  ${RED}5)${NC} Supprimer un ${GREEN}conteneur${NC}"
-    echo -e "  ${RED}6)${NC} Supprimer une ${GREEN}image Docker${NC}"
+    echo -e "  ${RED}3)${NC} Installer un ${GREEN}conteneur${NC}  en ${RED}session interactive${NC} ou ${ORANGE}détaché${NC}"
+    echo -e "  ${RED}4)${NC} Supprimer un ${GREEN}conteneur${NC}"
+    echo -e "  ${RED}5)${NC} Supprimer une ${GREEN}image Docker${NC}"
     read -p "Entrez le numéro de votre choix : " choix
     if [ "$choix" -eq 1 ]; then
-        apocker
+        compose_aio
     elif [ "$choix" -eq 2 ]; then
         compose
     elif [ "$choix" -eq 3 ]; then
-        pma
-    elif [ "$choix" -eq 4 ]; then
         docker_aio
-    elif [ "$choix" -eq 5 ]; then
+    elif [ "$choix" -eq 4 ]; then
         read -p "Entrez l'ID ou le nom du conteneur à supprimer : " container_id
         confirm
         docker rm -f $container_id
-    elif [ "$choix" -eq 6 ]; then
+    elif [ "$choix" -eq 5 ]; then
         read -p "Entrez l'ID ou le nom de l'image Docker à supprimer : " image_id
         confirm
         docker rmi $image_id
