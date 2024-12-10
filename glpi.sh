@@ -6,7 +6,7 @@ read -p "Mot de passe du compte root: " root
 cat > docker-$name.yaml <<EOL
 services:
   glpi_$name:
-    image: elestio/glpi:latest
+    image: diouxx/glpi:latest
     container_name: glpi_$name
     restart: always
     hostname: glpi
