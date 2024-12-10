@@ -20,7 +20,6 @@ else
 fi
 chmod +x *.sh
 dos2unix *.sh
-mv docker.sh docker1.sh
 for script in *.sh
 do
   mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
