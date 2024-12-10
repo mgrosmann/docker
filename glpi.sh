@@ -12,9 +12,9 @@ services:
     container_name: db_$name
     environment:
       MYSQL_ROOT_PASSWORD: $root
-      MYSQL_DATABASE: glpi
-      MYSQL_USER: glpi
-      MYSQL_PASSWORD: glpi
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: nextcloud
     ports:
       - "$port_sql:3306"
     networks:
@@ -49,3 +49,12 @@ networks:
 EOL
 
 docker compose -f "docker-$name.yaml" up -d
+
+# Initialiser les privilèges de la base de données pour Nextcloud
+sleep 20 # Attendre que les conteneurs soient complètement démarrés
+
+docker exec -i db_$name mysql -u root -p$root <<EOF
+GRANT ALL PRIVILEGES ON glpi.* TO 'glpi'@'%';
+FLUSH PRIVILEGES;
+EXIT;
+EOF
