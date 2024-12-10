@@ -1,6 +1,4 @@
 #!/bin/bash
-read -p "Port MySQL: " port_sql
-read -p "Port phpMyAdmin: " port_pma
 read -p "Port GLPI: " port_glpi
 read -p "Nom du projet: " name
 read -p "Mot de passe du compte root: " root
