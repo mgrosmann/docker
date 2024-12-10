@@ -1,8 +1,10 @@
 #!/bin/bash
-if [ ! -d "mgrosmann" ]; then
-  git clone https://github.com/mgrosmann/docker.git
+if ! command -v docker &> /dev/null
+then
+    chmod +x install.sh
+    bash install.sh
 else
-  echo "Le répertoire mgrosmann existe déjà."
+    echo "docker est déjà installé."
 fi
 if ! command -v dos2unix &> /dev/null
 then
@@ -48,5 +50,6 @@ echo "Listen 9003" >> ports.conf
 a2ensite docker
 systemctl restart apache2
 systemctl reload apache2
-echo "l'interface web est maintenant pres veuillez vous rendre sur localhost:9003"
-echo "lancer la commande 'container'"
+ip= hostname -I | awk '{print $1}'
+echo "l'interface web est maintenant pres veuillez vous rendre sur $ip:9003"
+echo "lancer la commande 'container' pour lancer l'outil centralisé"
