@@ -1,6 +1,8 @@
 <?php
+session_start();
 
-function executeCreationInstallationAction($choix, $container_name, $port, $volume = null, $root_password = null, $repertory = null, $user = null, $password = null, $port_pma = null) {
+// Fonction principale pour construire et enregistrer la commande Docker
+function executeCreationInstallationAction($choix, $container_name, $port, $volume = null, $root_password = null, $user = null, $password = null, $port_pma = null) {
     switch ($choix) {
         case 1:
             return createHttpdContainer($container_name, $port, $volume);
@@ -11,47 +13,57 @@ function executeCreationInstallationAction($choix, $container_name, $port, $volu
         case 4:
             return createSshSftpContainer($container_name, $port, $user, $password);
         default:
-            return "Choix invalide.";
+            return "echo 'Choix invalide.'";
     }
 }
 
+// Fonctions spécifiques pour chaque type de conteneur
 function createHttpdContainer($container_name, $port, $volume = null) {
     $command = "docker container run -d -p $port:80 --name $container_name";
     if ($volume) $command .= " -v $volume:/usr/local/apache2/htdocs";
     $command .= " httpd:latest";
-    return executeShellCommand($command);
+    return $command;
 }
 
 function createMysqlContainer($container_name, $port, $root_password) {
-    $command = "docker container run -d -p $port:3306 --name $container_name -e MYSQL_ROOT_PASSWORD=$root_password mysql";
-    return executeShellCommand($command);
+    return "docker container run -d -p $port:3306 --name $container_name -e MYSQL_ROOT_PASSWORD=$root_password mysql";
 }
 
 function createPhpmyadminContainer($container_name, $port_pma, $port, $root_password) {
     $network_name = "network-$container_name";
-    $command = <<<CMD
+    return <<<CMD
 docker network create $network_name && \
 docker run -d --name sql_$container_name --network $network_name -e MYSQL_ROOT_PASSWORD=$root_password -p $port:3306 mysql:latest && \
 docker run -d --name pma_$container_name --network $network_name -e PMA_HOST=sql_$container_name -p $port_pma:80 phpmyadmin/phpmyadmin:latest
 CMD;
-    return executeShellCommand($command);
 }
 
 function createSshSftpContainer($container_name, $port, $user, $password) {
-    $command = <<<CMD
+    return <<<CMD
 docker container run -d -p $port:22 --name $container_name rastasheep/ubuntu-sshd && \
 docker exec $container_name bash -c "adduser --disabled-password --gecos '' $user && echo '$user:$password' | chpasswd"
 CMD;
-    return executeShellCommand($command);
 }
 
-function executeShellCommand($command) {
-    $output = [];
-    $status = null;
-    exec($command . ' 2>&1', $output, $status);
-    return $status !== 0 ? ['output' => implode("\n", $output), 'error' => 'Erreur : ' . implode("\n", $output)] : ['output' => implode("\n", $output), 'error' => ''];
-}
+// Traitement du formulaire
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $choix = $_POST['choix'];
+    $container_name = $_POST['container_name'];
+    $port = $_POST['port'];
+    $volume = $_POST['volume'] ?? null;
+    $root_password = $_POST['root_password'] ?? null;
+    $user = $_POST['user'] ?? null;
+    $password = $_POST['password'] ?? null;
+    $port_pma = $_POST['port_pma'] ?? null;
 
+    // Construire la commande et l'enregistrer en session
+    $command = executeCreationInstallationAction($choix, $container_name, $port, $volume, $root_password, $user, $password, $port_pma);
+    $_SESSION['command'] = $command;
+
+    // Rediriger vers logs.html
+    header("Location: logs.html");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +102,7 @@ function executeShellCommand($command) {
 <body>
 
 <h1>Création Conteneurs Docker</h1>
-<form action="" method="post">
+<form method="post">
     <div>
         <label for="choix">Type de conteneur :</label>
         <select id="choix" name="choix" required onchange="updateForm()">
@@ -132,24 +144,5 @@ function executeShellCommand($command) {
     <button type="submit">Créer</button>
 </form>
 
-<?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $choix = $_POST['choix'];
-    $container_name = $_POST['container_name'];
-    $port = $_POST['port'];
-    $volume = $_POST['volume'] ?? null;
-    $root_password = $_POST['root_password'] ?? null;
-    $user = $_POST['user'] ?? null;
-    $password = $_POST['password'] ?? null;
-    $port_pma = $_POST['port_pma'] ?? null;
-
-    $result = executeCreationInstallationAction($choix, $container_name, $port, $volume, $root_password, null, $user, $password, $port_pma);
-
-    echo "<pre>" . htmlspecialchars($result['output']) . "</pre>";
-    if ($result['error']) echo "<pre style='color:red'>" . htmlspecialchars($result['error']) . "</pre>";
-}
-?>
-
 </body>
 </html>
-

@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: gestion_conteneurs.php');
     } elseif ($categorie == 3) {
         header('Location: outils_gestion.php');
+    } elseif ($categorie == 4) {
+        header('Location: test.php');  // Redirection vers test.php pour le bouton "Exécuteur de commande"
     }
     exit();
 }
@@ -41,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit" name="categorie" value="1" class="button">Création/Installation de conteneurs</button>
         <button type="submit" name="categorie" value="2" class="button">Gestion des conteneurs</button>
         <button type="submit" name="categorie" value="3" class="button">Outils de gestion Docker</button>
+        <button type="submit" name="categorie" value="4" class="button">Exécuteur de commande</button>  <!-- Nouveau bouton -->
     </form>
 </div>
 

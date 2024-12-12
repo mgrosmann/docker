@@ -1,25 +1,20 @@
 <?php
+session_start();
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Récupérer la commande soumise par l'utilisateur
     $userCommand = isset($_POST['dockerCommand']) ? $_POST['dockerCommand'] : '';
-    $command = escapeshellcmd($userCommand);
+    $containerName = isset($_POST['container_name']) ? escapeshellarg($_POST['container_name']) : '';
 
-    // Variables pour afficher les logs et erreurs
-    $output = '';
-    $error = '';
-    $status = null;
+    // Remplacer les placeholders dynamiques
+    $command = str_replace('<?php echo isset($_POST[\'container_name\']) ? $_POST[\'container_name\'] : \'\'; ?>', $containerName, $userCommand);
 
-    // Exécuter la commande et capturer la sortie, rediriger stderr vers stdout pour avoir toute la sortie dans $output
-    exec($command . ' 2>&1', $output, $status);
+    // Sauvegarder la commande dans la session
+    $_SESSION['command'] = escapeshellcmd($command);
 
-    // Vérifier si la commande a échoué
-    if ($status !== 0) {
-        // Ajouter le message d'erreur
-        $error = 'Erreur lors de l\'exécution de la commande Docker :';
-    }
-
-    // Les logs doivent être affichés, même si la commande échoue
-    $output = implode("\n", $output); // On formatte la sortie pour un affichage lisible
+    // Rediriger vers logs.html pour afficher les résultats
+    header('Location: logs.html');
+    exit;
 }
 ?>
 
@@ -52,25 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .button:hover {
             background-color: #218838;
         }
-        .output, .error {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            border: 1px solid #ccc;
-        }
-        .output {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .error {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -91,8 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="text" id="container_name" name="container_name" placeholder="Entrez le nom du conteneur" required>
         <input type="submit" class="button" value="Afficher les logs d'un conteneur">
     </form>
-
-
 
     <!-- Ajouter des boutons pour les commandes Docker -->
     <form method="post">
@@ -115,27 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="submit" class="button" value="Lister tous les volumes Docker">
     </form>
 
-   
     <form method="post">
         <input type="hidden" name="dockerCommand" value="docker stats --no-stream">
         <input type="submit" class="button" value="Afficher les statistiques Docker">
     </form>
-
-    <?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-        <div class="output">
-            <h2>Logs de la commande Docker :</h2>
-            <pre><?php echo htmlspecialchars($output); ?></pre>
-        </div>
-        
-        <?php if ($error): ?>
-            <div class="error">
-                <h2>Erreur :</h2>
-                <pre><?php echo htmlspecialchars($error); ?></pre>
-            </div>
-        <?php endif; ?>
-    <?php endif; ?>
 </div>
 
 </body>
 </html>
-

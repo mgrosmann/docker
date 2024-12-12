@@ -6,22 +6,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation de la commande pour éviter les injections shell
     $command = escapeshellcmd($userCommand);
 
-    // Variables pour afficher les logs et erreurs
-    $output = '';
-    $error = '';
-    $status = null;
+    // Sauvegarder la commande dans une session pour l'exécuter en arrière-plan
+    session_start();
+    $_SESSION['command'] = $command;
+    session_write_close();
 
-    // Exécuter la commande et capturer la sortie, rediriger stderr vers stdout pour avoir toute la sortie dans $output
-    exec($command . ' 2>&1', $output, $status);
-
-    // Vérifier si la commande a échoué
-    if ($status !== 0) {
-        // Ajouter le message d'erreur
-        $error = 'Erreur lors de l\'exécution de la commande Docker :';
-    }
-
-    // Les logs doivent être affichés, même si la commande échoue
-    $output = implode("\n", $output); // On formatte la sortie pour un affichage lisible
+    // Rediriger vers une page d'exécution en temps réel
+    header('Location: execute.php');
+    exit;
 }
 ?>
 
@@ -54,25 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .button:hover {
             background-color: #218838;
         }
-        .output, .error {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f8f9fa;
-            border: 1px solid #ccc;
-        }
-        .output {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        .error {
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-        }
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
         input[type="text"] {
             width: 100%;
             padding: 10px;
@@ -94,24 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <br>
         <input type="submit" class="button" value="Exécuter la commande Docker">
     </form>
-
-    <?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-        <div class="output">
-            <h2>Logs de la commande Docker :</h2>
-            <pre><?php echo htmlspecialchars($output); ?></pre>
-        </div>
-        
-        <?php if ($error): ?>
-            <div class="error">
-                <h2>Erreur :</h2>
-                <pre><?php echo htmlspecialchars($error); ?></pre>
-            </div>
-        <?php endif; ?>
-
-    <?php endif; ?>
 </div>
 
 </body>
 </html>
-
-
