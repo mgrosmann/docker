@@ -25,23 +25,5 @@ do
   mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
 done
 apt install libapache2-mod-php
-mv web /var/www/docker
-usermod -aG docker www-data
 sudo chmod 666 /var/run/docker.sock
-cd /etc/apache2/sites-available
-cat <<EOF > docker.conf
-<VirtualHost *:9003>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/docker
-    ErrorLog \${APACHE_LOG_DIR}/error.log
-    CustomLog \${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
-EOF
-cd /etc/apache2/
-echo "Listen 9003" >> ports.conf
-a2ensite docker
-systemctl restart apache2
-systemctl reload apache2
-ip=$(hostname -I | awk '{print $1}')
-echo "L'interface web est maintenant prête. Veuillez vous rendre sur http://$ip:9003"
 echo "lancer la commande 'container' pour lancer l'outil centralisé"
