@@ -24,6 +24,4 @@ for script in *.sh
 do
   mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
 done
-apt install libapache2-mod-php
-sudo chmod 666 /var/run/docker.sock
 echo "lancer la commande 'container' pour lancer l'outil centralisé"
