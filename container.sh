@@ -57,28 +57,20 @@ elif [ "$categorie" -eq 2 ]; then
     echo -e "  ${RED}7)${NC} Recréer les ${GREEN}conteneurs arrêtés${NC} basés sur le fichier de configuration"
     read -p "Entrez le numéro de votre choix : " choix
     if [ "$choix" -eq 1 ]; then
-        read -p "À quel conteneur voulez-vous accéder ? " container_name
-        docker container exec -it $container_name /bin/bash
+        ssh_ct
     elif [ "$choix" -eq 2 ]; then
         for file in *.yaml
-        do
-          docker compose -f $file start ;
-        done
+        start
         docker ps -q | xargs -r docker start
     elif [ "$choix" -eq 3 ]; then
-        for file in *.yaml
-        do
-          docker compose -f $file stop ;
-        done
+        stop
         docker ps -q | xargs -r docker stop
     elif [ "$choix" -eq 4 ]; then
-        read -p "Sur quel conteneur voulez-vous appliquer des commandes Linux : " name
-        docker exec -it "$name" /bin/bash -c "apt-get update && apt-get install -y wget nano"
-        echo "Commandes Linux installées avec succès dans le conteneur $name"
+        linux
     elif [ "$choix" -eq 5 ]; then
         network
     elif [ "$choix" -eq 6 ]; then
-        docker container prune -f
+        remove
     elif [ "$choix" -eq 7 ]; then
         docker-compose up -d
     else
