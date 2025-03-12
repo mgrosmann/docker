@@ -18,6 +18,8 @@ then
 else
     echo "dos2unix est déjà installé."
 fi
+rm Docker.sh
+rm deb_docker.sh
 chmod +x *.sh
 dos2unix *.sh
 for script in *.sh
