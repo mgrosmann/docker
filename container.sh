@@ -59,9 +59,7 @@ elif [ "$categorie" -eq 2 ]; then
     if [ "$choix" -eq 1 ]; then
         ssh_ct
     elif [ "$choix" -eq 2 ]; then
-        for file in *.yaml
-            start
-        docker ps -q | xargs -r docker start
+        start
     elif [ "$choix" -eq 3 ]; then
         stop
         docker ps -q | xargs -r docker stop
