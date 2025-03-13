@@ -19,8 +19,7 @@ echo -e "${LIGHT_GREEN}Veuillez choisir une catégorie :${NC}"
 echo -e "${RED}1)${NC} APACHE" # apocker
 echo -e "${RED}2)${NC} MYSQL+PMA" # pma
 echo -e "${RED}3)${NC} MYSQL+PMA+GLPI" # glpi
-echo -e "${RED}4)${NC} MYSQL+PMA+NEXTCloud" # nextcloud
-
+echo -e "${RED}4)${NC} Grafana+Prometheus" # grafana et prometheus
 read -p "Entrez le numéro de votre choix : " compose
 
 if [ "$compose" -eq 1 ]; then
@@ -31,6 +30,8 @@ elif [ "$compose" -eq 3 ]; then
     glpi
 elif [ "$compose" -eq 4 ]; then
     nextcloud
+elif [ "$compose" -eq 5 ]; then
+    grafeus
 else
     echo -e "${RED}Choix invalide. Veuillez réessayer.${NC}"
 fi
