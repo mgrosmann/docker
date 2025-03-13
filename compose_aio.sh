@@ -18,8 +18,8 @@ NC='\033[0m'
 echo -e "${LIGHT_GREEN}Veuillez choisir une catégorie :${NC}"
 echo -e "${RED}1)${NC} APACHE" # apocker
 echo -e "${RED}2)${NC} MYSQL+PMA" # pma
-echo -e "${RED}3)${NC} GLPI" # glpi
-echo -e "${RED}4)${NC} NEXTCloud" # nextcloud
+echo -e "${RED}3)${NC} MYSQL+PMA+GLPI" # glpi
+echo -e "${RED}4)${NC} MYSQL+PMA+NEXTCloud" # nextcloud
 
 read -p "Entrez le numéro de votre choix : " compose
 
