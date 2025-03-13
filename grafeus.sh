@@ -1,8 +1,7 @@
 #!/bin/bash
-read -p "Port GRAFANA: " port_grafana
-read -p "Port Prometheus: " port_prometheus
-read -p "Nom du projet: " name
-
+port_grafana=$(dialog --inputbox "Entrez le port pour Grafana :" 8 50 2>&1 >/dev/tty)
+port_prometheus=$(dialog --inputbox "Entrez le port pour Prometheus :" 8 50 2>&1 >/dev/tty)
+name=$(dialog --inputbox "Entrez le nom du projet :" 8 50 2>&1 >/dev/tty)
 cat <<EOF > docker-$name.yaml
 services:
   grafana_$name:
@@ -25,4 +24,7 @@ networks:
   network_$name:
     driver: bridge
 EOF
+dialog --msgbox "Le fichier docker-$name.yaml a été créé avec succès !" 8 50
 docker compose -f "docker-$name.yaml" up -d
+dialog --msgbox "Les conteneurs Grafana et Prometheus pour le projet $name ont été démarrés avec succès !" 8 50
+clear
