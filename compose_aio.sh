@@ -33,4 +33,4 @@ case $choix in
         dialog --msgbox "Choix invalide. Veuillez réessayer." 6 40
         ;;
 esac
-clea
+clear
