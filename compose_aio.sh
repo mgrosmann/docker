@@ -10,23 +10,18 @@ choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     2>&1 >/dev/tty)
 case $choix in
     1)
-        dialog --msgbox "Lancement de la commande APACHE " 6 40
         apocker
         ;;
     2)
-        dialog --msgbox "Lancement de la commande MYSQL+PMA " 6 40
         pma
         ;;
     3)
-        dialog --msgbox "Lancement de la commande MYSQL+PMA+GLPI " 6 40
         glpi
         ;;
     4)
-        dialog --msgbox "Lancement de la commande nextcloud " 6 40
         nextcloud
         ;;
     5)
-        dialog --msgbox "Lancement de la commande grafeus " 6 40
         grafeus
         ;;
     *)
