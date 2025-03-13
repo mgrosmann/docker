@@ -16,8 +16,27 @@ services:
       - TIMEZONE=Europe/Brussels
     networks:
       - network_$name
-networks:
-  network_$name:
+  
+  mysql_$name:
+    image: mysql
+    container_name: db_$name
+    environment:
+      MYSQL_ROOT_PASSWORD: $root
+    ports:
+      - "$port_sql:3306"
+    networks:
+      - network_$name
+
+  phpmyadmin_$name:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_$name
+    environment:
+      PMA_HOST: db_$name
+      MYSQL_ROOT_PASSWORD: $root
+    ports:
+      - "$port_pma:80"
+    networks:
+      - network_$name
     driver: bridge
 EOL
 
