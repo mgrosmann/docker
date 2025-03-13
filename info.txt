@@ -8,3 +8,4 @@
 a faire= prometheus, grafana, emby
 docker run -d --name prometheus-container -e TZ=UTC -p 9090:9090 ubuntu/prometheus:2-24.04_stable
 docker run -d --name=grafana -p 3000:3000 grafana/grafana
+ docker run --name some-nginx -d -p 8080:80 some-content-nginx
