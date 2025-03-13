@@ -44,3 +44,4 @@ networks:
   network_$name:
     driver: bridge
 EOL
+docker compose -f "docker-$name.yaml" up -d
