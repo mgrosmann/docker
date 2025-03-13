@@ -1,9 +1,8 @@
 #!/bin/bash
-read -p "Port MySQL: " port_sql
-read -p "Port phpMyAdmin: " port_pma
-read -p "Nom du projet: " name
-read -p "Mot de passe du compte root: " root
-
+port_sql=$(dialog --inputbox "Entrez le port MySQL :" 8 50 2>&1 >/dev/tty)
+port_pma=$(dialog --inputbox "Entrez le port phpMyAdmin :" 8 50 2>&1 >/dev/tty)
+name=$(dialog --inputbox "Entrez le nom du projet :" 8 50 2>&1 >/dev/tty)
+root=$(dialog --inputbox "Entrez le mot de passe du compte root MySQL :" 8 50 2>&1 >/dev/tty)
 cat <<EOF > docker-$name.yaml
 services:
   mysql_$name:
@@ -32,4 +31,9 @@ networks:
     driver: bridge
 EOF
 
+dialog --msgbox "Le fichier docker-$name.yaml a été créé avec succès !" 8 50
+
 docker compose -f "docker-$name.yaml" up -d
+
+dialog --msgbox "Les conteneurs MySQL et phpMyAdmin pour le projet $name ont été démarrés avec succès !" 8 50
+clear
