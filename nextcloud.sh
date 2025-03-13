@@ -36,11 +36,10 @@ services:
     ports:
       - "$port_pma:80"
     networks:
-      - network_$name      
+      - network_$name  
 
 networks:
   network_$name:
     driver: bridge
 EOL
-
 docker compose -f "docker-$name.yaml" up -d
