@@ -34,4 +34,4 @@ do
 done
 cd ..
 rm -r docker
-echo "lancer la commande 'container' pour lancer l'outil centralisé"
+echo "lancer la commande 'dcs' pour lancer l'outil centralisé"
