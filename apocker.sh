@@ -1,9 +1,15 @@
 #!/bin/bash
-read -p "Voulez-vous créer un nouveau conteneur/site (1) ou associer un dossier existant (2) ? " choice
-if [ "$choice" -eq 1 ]; then
-  read -p "Entrez le nom du nouveau conteneur/site : " site_name
-  read -p "Entrez le port pour le nouveau site : " site_port
-  cat <<EOF >> compose_$site_name.yaml
+choix=$(dialog --clear --backtitle "Gestion des sites et conteneurs Docker" \
+    --title "Menu Principal" \
+    --menu "Voulez-vous créer un nouveau conteneur/site ou associer un dossier existant ?" 15 50 2 \
+    1 "Créer un nouveau conteneur/site" \
+    2 "Associer un dossier existant" \
+    2>&1 >/dev/tty)
+if [ "$choix" -eq 1 ]; then
+    site_name=$(dialog --inputbox "Entrez le nom du nouveau conteneur/site :" 8 50 2>&1 >/dev/tty)
+    site_port=$(dialog --inputbox "Entrez le port pour le nouveau site :" 8 50 2>&1 >/dev/tty)
+
+    cat <<EOF > compose_$site_name.yaml
 services:
   $site_name:
     container_name: $site_name
@@ -15,19 +21,25 @@ services:
 networks:
   apache_network:
 EOF
-  mkdir -p "docker_webfile/$site_name"
-  echo "bienvenue sur $site_name situe sur le port $site_port" > "docker_webfile/$site_name/index.html"
-  docker compose -f "compose_$site_name.yaml" up -d
-  FILE_PATH="/usr/local/apache2/htdocs"
-  docker exec "$site_name" rm -rf "$FILE_PATH"
-  docker cp "docker_webfile/$site_name" "$site_name:/usr/local/apache2/htdocs"
-elif [ "$choice" -eq 2 ]; then
-  read -p "Entrez le repertoire du dossier a importer : " repertory_html
-  read -p "Entrez le nom du conteneur sur lequel appliquer le code HTML importé : " site_name
+
+    mkdir -p "docker_webfile/$site_name"
+    echo "bienvenue sur $site_name situe sur le port $site_port" > "docker_webfile/$site_name/index.html"
+    docker compose -f "compose_$site_name.yaml" up -d
+    FILE_PATH="/usr/local/apache2/htdocs"
+    docker exec "$site_name" rm -rf "$FILE_PATH"
+    docker cp "docker_webfile/$site_name" "$site_name:/usr/local/apache2/htdocs"
+    dialog --msgbox "Le nouveau conteneur/site $site_name a été créé et configuré avec succès sur le port $site_port." 8 50
+
+elif [ "$choix" -eq 2 ]; then
+    repertory_html=$(dialog --inputbox "Entrez le répertoire du dossier à importer :" 8 50 2>&1 >/dev/tty)
+    site_name=$(dialog --inputbox "Entrez le nom du conteneur à associer au dossier importé :" 8 50 2>&1 >/dev/tty)
     FILE_PATH="/usr/local/apache2/htdocs"
     docker exec "$site_name" rm -rf "$FILE_PATH"
     docker cp "$repertory_html" "$site_name:/usr/local/apache2/htdocs"
-    echo "Dossier $repertory_html associé avec succès au site $site_name."
+    dialog --msgbox "Le dossier $repertory_html a été associé avec succès au site $site_name." 8 50
+
 else
-  echo "Choix incorrect, veuillez réessayer."
+    dialog --msgbox "Choix incorrect. Veuillez réessayer." 8 50
 fi
+
+clear
