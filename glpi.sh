@@ -2,6 +2,8 @@
 read -p "Port GLPI: " port_glpi
 read -p "Nom du projet: " name
 read -p "Mot de passe du compte root: " root
+read -p "port sql" port_sql
+read -p "port pma" port_pma
 
 cat > docker-$name.yaml <<EOL
 services:
@@ -27,9 +29,9 @@ services:
     networks:
       - network_$name
 
-  phpmyadmin_$name:
+  phpmyadmin_name:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_$name
+    container_name: phpmyadmin_name
     environment:
       PMA_HOST: db_$name
       MYSQL_ROOT_PASSWORD: $root
