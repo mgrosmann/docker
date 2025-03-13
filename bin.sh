@@ -32,4 +32,6 @@ for script in *.sh
 do
   mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
 done
+cd ..
+rm -r docker
 echo "lancer la commande 'container' pour lancer l'outil centralisé"
