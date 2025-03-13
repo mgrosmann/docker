@@ -37,7 +37,7 @@ services:
       MYSQL_ROOT_PASSWORD: $root
     ports:
       - "$port_pma:80"
-     networks:
+    networks:
       - network_$name  
  networks:
   network_$name:
