@@ -5,7 +5,8 @@ choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     1 "APACHE" \
     2 "MYSQL+PMA" \
     3 "MYSQL+PMA+GLPI" \
-    4 "Grafana+Prometheus" \
+    4 "MYSQL+PMA+NextCloud" \
+    5 "Grafana+Prometheus" \
     2>&1 >/dev/tty)
 case $choix in
     1)
@@ -21,7 +22,11 @@ case $choix in
         glpi
         ;;
     4)
-        dialog --msgbox "Lancement de la commande Grafana+Prometheus " 6 40
+        dialog --msgbox "Lancement de la commande nextcloud " 6 40
+        nextcloud
+        ;;
+    5)
+        dialog --msgbox "Lancement de la commande grafeus " 6 40
         grafeus
         ;;
     *)
