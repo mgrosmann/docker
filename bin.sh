@@ -11,12 +11,18 @@ then
     sudo apt-get install -y dos2unix
 else
     echo "dos2unix est déjà installé."
-    fi
+fi
 if ! command -v apache2 &> /dev/null
 then
     sudo apt-get install -y apache2
 else
     echo "dos2unix est déjà installé."
+fi
+if ! command -v dialog &> /dev/null;
+then
+    sudo apt install -y dialog
+else
+    echo "dialog est déjà installé."
 fi
 rm Docker.sh
 rm deb_docker.sh
