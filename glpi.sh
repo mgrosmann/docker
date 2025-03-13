@@ -2,8 +2,8 @@
 read -p "Port GLPI: " port_glpi
 read -p "Nom du projet: " name
 read -p "Mot de passe du compte root: " root
-read -p "port sql" port_sql
-read -p "port pma" port_pma
+read -p "port sql: " port_sql
+read -p "port pma: " port_pma
 
 cat > docker-$name.yaml <<EOL
 services:
