@@ -1,12 +1,12 @@
 #!/bin/bash
-choix_categorie=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
+choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     --title "Menu Principal" \
     --menu "Veuillez choisir une catégorie :" 15 50 2 \
     1 "Conteneur interactif" \
     2 "Conteneur détaché" \
     2>&1 >/dev/tty)
 
-case $choix_categorie in
+case $choix in
 1)
     choix_interactif=$(dialog --clear --backtitle "Conteneur interactif" \
         --title "Options interactives" \
