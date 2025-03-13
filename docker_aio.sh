@@ -1,10 +1,4 @@
 #!/bin/bash
-
-if ! command -v dialog &> /dev/null; then
-    echo "Le programme 'dialog' n'est pas installé. Installation en cours..."
-    sudo apt install -y dialog
-fi
-
 choix_categorie=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     --title "Menu Principal" \
     --menu "Veuillez choisir une catégorie :" 15 50 2 \
