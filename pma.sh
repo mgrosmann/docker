@@ -1,5 +1,9 @@
 #!/bin/bash
 port_sql=$(dialog --inputbox "Entrez le port MySQL :" 8 50 2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    compose_aio
+    exit
+fi
 port_pma=$(dialog --inputbox "Entrez le port phpMyAdmin :" 8 50 2>&1 >/dev/tty)
 name=$(dialog --inputbox "Entrez le nom du projet :" 8 50 2>&1 >/dev/tty)
 root=$(dialog --inputbox "Entrez le mot de passe du compte root MySQL :" 8 50 2>&1 >/dev/tty)
