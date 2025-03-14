@@ -4,11 +4,12 @@ choix=$(dialog --clear --backtitle "Gestion des sites et conteneurs Docker" \
     --menu "Voulez-vous créer un nouveau conteneur/site ou associer un dossier existant ?" 15 50 2 \
     1 "Créer un nouveau conteneur/site" \
     2 "Associer un dossier existant" \
+    2>&1 >/dev/tty)
 if [ $? -ne 0 ]; then
     compose_aio
     exit
 fi
-    2>&1 >/dev/tty)
+    
 if [ "$choix" -eq 1 ]; then
     site_name=$(dialog --inputbox "Entrez le nom du nouveau conteneur/site :" 8 50 2>&1 >/dev/tty)
     site_port=$(dialog --inputbox "Entrez le port pour le nouveau site :" 8 50 2>&1 >/dev/tty)
