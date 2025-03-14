@@ -8,6 +8,10 @@ choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     4 "MYSQL+PMA+NextCloud" \
     5 "Grafana+Prometheus" \
     2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    create
+    exit
+fi
 case $choix in
     1)
         apocker
