@@ -12,3 +12,7 @@ docker run -it --name prometheus-container -e TZ=UTC -p 9090:9090 ubuntu/prometh
 docker run -it --name=grafana -p 3000:3000 grafana/grafana
 docker run -d --name nginx  -d -p8092:80 nginx
 docker run -it --name nginx  -d -p8092:80 nginx
+docker run -it --name glpi  -d -p8092:80 diouxx/glpi:latest
+docker run -d --name glpi  -d -p8092:80 diouxx/glpi:latest
+docker run -it --name nextcloud  -d -p8092:80 nextcloud
+docker run -d --name nextcloud  -d -p8092:80 nextcloud
