@@ -6,7 +6,7 @@ choix=$($DIALOG --clear --backtitle "Création/installation de conteneurs" \
     --menu "Veuillez choisir une option :" 15 50 5 \
     1 "Créer un conteneur avec fichier yaml" \
     2 "Installer un conteneur LAMP+FTP" \
-    3 "Installer un conteneur en session interactive ou détaché" \
+    3 "Installer un conteneur interactif/détaché" \
     2>&1 >/dev/tty)
 if [ $? -ne 0 ]; then
     dcs
