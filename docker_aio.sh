@@ -20,6 +20,10 @@ case $choix in
         3 "PhpMyAdmin" \
         4 "SSH/SFTP" \
         2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    docker_aio
+    exit
+fi
 
     case $choix_interactif in
     1)
@@ -94,6 +98,10 @@ case $choix in
         3 "PhpMyAdmin" \
         4 "SSH/SFTP" \
         2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    docker_aio
+    exit
+fi
 
     case $choix_detache in
     1)
