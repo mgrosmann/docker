@@ -5,6 +5,10 @@ choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     1 "Conteneur interactif" \
     2 "Conteneur détaché" \
     2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    create
+    exit
+fi
 
 case $choix in
 1)
