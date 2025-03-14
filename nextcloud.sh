@@ -1,5 +1,9 @@
 #!/bin/bash
 port_nextcloud=$(dialog --inputbox "Entrez le port Nextcloud :" 8 50 2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    compose_aio
+    exit
+fi
 name=$(dialog --inputbox "Entrez le nom du projet :" 8 50 2>&1 >/dev/tty)
 root=$(dialog --inputbox "Entrez le mot de passe du compte root MySQL :" 8 50 2>&1 >/dev/tty)
 port_sql=$(dialog --inputbox "Entrez le port SQL :" 8 50 2>&1 >/dev/tty)
