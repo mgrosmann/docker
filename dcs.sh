@@ -6,7 +6,7 @@ categorie=$($DIALOG --clear --backtitle "Gestion Docker" \
     --menu "Veuillez choisir une catégorie :" 15 50 3 \
     1 "Création/installation de conteneurs" \
     2 "Gestion des conteneurs existants" \
-    3 "Outils de gestion Docker" \
+    3 "Outils Docker" \
     2>&1 >/dev/tty)
 clear
 
