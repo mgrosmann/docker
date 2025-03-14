@@ -7,7 +7,6 @@ if [ $? -ne 0 ]; then
 fi
 db_password=$($DIALOG --clear --inputbox "Entrez le mot de passe root pour MySQL :" 8 40 2>&1 >/dev/tty)
 mysql_user=$($DIALOG --clear --inputbox "Entrez le nom d'utilisateur pour MySQL :" 8 40 2>&1 >/dev/tty)
-mysql_user=$($DIALOG --clear --inputbox "Entrez le nom d'utilisateur pour MySQL :" 8 40 2>&1 >/dev/tty)
 mysql_user_password=$($DIALOG --clear --inputbox "Entrez le mot de passe pour l'utilisateur MySQL ($mysql_user) :" 8 40 2>&1 >/dev/tty)
 db_port=$($DIALOG --clear --inputbox "Entrez le port externe pour MySQL (par exemple : 33306) :" 8 40 2>&1 >/dev/tty)
 ftp_user=$($DIALOG --clear --inputbox "Entrez le nom d'utilisateur FTP :" 8 40 2>&1 >/dev/tty)
