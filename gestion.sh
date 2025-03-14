@@ -12,6 +12,10 @@ choix=$($DIALOG --clear --backtitle "Gestion des conteneurs existants" \
     6 "Supprimer tous les conteneurs arrêtés" \
     7 "Recréer les conteneurs arrêtés" \
     2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    dcs
+    exit
+fi
 clear
 
 case $choix in
