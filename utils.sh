@@ -26,6 +26,10 @@ case $choix in
     4) docker ps -a ;;
     5) docker stats ;;
     6) container_id=$($DIALOG --inputbox "Entrez l'ID ou le nom du conteneur :" 8 40 2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    utils
+    exit
+fi
        docker inspect $container_id ;;
     7) sub_choix=$($DIALOG --clear --backtitle "Sauvegarde et restauration" \
         --title "Choisissez une option" \
@@ -33,6 +37,10 @@ case $choix in
         1 "Sauvegarder un conteneur" \
         2 "Restaurer un conteneur" \
         2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    utils
+    exit
+fi
        clear
        case $sub_choix in
            1) container_id=$($DIALOG --inputbox "Entrez l'ID ou le nom du conteneur :" 8 40 2>&1 >/dev/tty)
