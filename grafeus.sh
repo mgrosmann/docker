@@ -1,5 +1,9 @@
 #!/bin/bash
 port_grafana=$(dialog --inputbox "Entrez le port pour Grafana :" 8 50 2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    compose_aio
+    exit
+fi
 port_prometheus=$(dialog --inputbox "Entrez le port pour Prometheus :" 8 50 2>&1 >/dev/tty)
 name=$(dialog --inputbox "Entrez le nom du projet :" 8 50 2>&1 >/dev/tty)
 cat <<EOF > docker-$name.yaml
