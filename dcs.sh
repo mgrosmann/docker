@@ -13,5 +13,5 @@ clear
 case $categorie in
     1) create ;;  
     2) gestion ;; 
-    3) utils.sh ;;   
+    3) utils ;;   
 esac
