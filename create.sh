@@ -10,6 +10,10 @@ choix=$($DIALOG --clear --backtitle "Création/installation de conteneurs" \
     4 "Supprimer un conteneur" \
     5 "Supprimer une image Docker" \
     2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    dcs
+    exit
+fi
 clear
 
 case $choix in
