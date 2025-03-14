@@ -21,7 +21,15 @@ case $choix in
     2) compose ;;
     3) docker_aio ;;
     4) container_id=$($DIALOG --inputbox "Entrez l'ID ou le nom du conteneur à supprimer :" 8 40 2>&1 >/dev/tty)
+    if [ $? -ne 0 ]; then
+    dcs
+    exit
+    fi
        docker rm -f $container_id ;;
     5) image_id=$($DIALOG --inputbox "Entrez l'ID ou le nom de l'image Docker à supprimer :" 8 40 2>&1 >/dev/tty)
+    if [ $? -ne 0 ]; then
+        dcs
+        exit
+    fi
        docker rmi $image_id ;;
 esac
