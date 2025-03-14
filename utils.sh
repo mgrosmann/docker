@@ -20,6 +20,10 @@ clear
 
 case $choix in
     1) container_id=$($DIALOG --inputbox "Entrez l'ID ou le nom du conteneur :" 8 40 2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    utils
+    exit
+fi
        docker logs $container_id ;;
     2) docker volume ls ;;
     3) docker images ;;
