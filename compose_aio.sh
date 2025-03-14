@@ -7,6 +7,7 @@ choix=$(dialog --clear --backtitle "Gestion des conteneurs Docker" \
     3 "MYSQL+PMA+GLPI" \
     4 "MYSQL+PMA+NextCloud" \
     5 "Grafana+Prometheus" \
+    6 "nginx" \
     2>&1 >/dev/tty)
 if [ $? -ne 0 ]; then
     create
@@ -27,6 +28,9 @@ case $choix in
         ;;
     5)
         grafeus
+        ;;
+    6)
+        nginx
         ;;
     *)
         dialog --msgbox "Choix invalide. Veuillez réessayer." 6 40
