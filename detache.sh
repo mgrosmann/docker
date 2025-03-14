@@ -6,11 +6,11 @@
         2 "MySQL" \
         3 "PhpMyAdmin" \
         4 "SSH/SFTP" \
-        5 "glpi" \
-        6 "nextcoud" \
-        7 "prometheus" \
-        8 "grafana" \
-        9 "nginx" \
+        5 "nginx" \
+        6 "glpi" \
+        7 "nextcloud" \
+        8 "prometheus" \
+        9 "grafana" \
     case $choix_detache in
     1)
         choix_httpd=$(dialog --clear --backtitle "Apache HTTPD" \
