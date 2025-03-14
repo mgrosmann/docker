@@ -12,6 +12,10 @@ choix=$($DIALOG --clear --backtitle "Outils de gestion Docker" \
     6 "Inspecter un conteneur" \
     7 "Sauvegarder et restaurer un conteneur" \
     2>&1 >/dev/tty)
+if [ $? -ne 0 ]; then
+    dcs
+    exit
+fi
 clear
 
 case $choix in
