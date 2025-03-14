@@ -2,15 +2,15 @@
     choix_interactif=$(dialog --clear --backtitle "Conteneur interactif" \
         --title "Options interactives" \
         --menu "Choisissez un service :" 15 50 4 \
-        1 "Apache HTTPD" \
+         1 "Apache HTTPD" \
         2 "MySQL" \
         3 "PhpMyAdmin" \
         4 "SSH/SFTP" \
-        5 "glpi" \
-        6 "nextcoud" \
-        7 "prometheus" \
-        8 "grafana" \
-        9 "nginx" \
+        5 "nginx" \
+        6 "glpi" \
+        7 "nextcloud" \
+        8 "prometheus" \
+        9 "grafana" \
         2>&1 >/dev/tty)
 if [ $? -ne 0 ]; then
     docker_aio
