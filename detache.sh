@@ -15,6 +15,7 @@ choix_detache=$(dialog --clear --backtitle "Conteneur détaché" \
     2>&1 >/dev/tty)
 
 if [ $? -ne 0 ]; then
+    create
     exit
 fi
 
