@@ -1,7 +1,7 @@
 #!/bin/bash
 DIALOG=${DIALOG=dialog}
 
-choix=$($DIALOG --clear --backtitle "Outils de gestion Docker" \
+choix=$($DIALOG --clear --backtitle "Outils Docker" \
     --title "Choisissez une action" \
     --menu "Veuillez choisir une option :" 15 50 7 \
     1 "Afficher les logs d'un conteneur" \
