@@ -1,8 +1,8 @@
 #!/bin/bash
 if ! command -v docker &> /dev/null
 then
-    chmod +x install.sh
-    bash install.sh
+    chmod +x docker.sh
+    bash docker.sh
 else
     echo "docker est déjà installé."
 fi
