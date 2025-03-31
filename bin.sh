@@ -8,19 +8,19 @@ else
 fi
 if ! command -v dos2unix &> /dev/null
 then
-    sudo apt-get install -y dos2unix
+    apt-get install -y dos2unix
 else
     echo "dos2unix est déjà installé."
 fi
 if ! command -v apache2 &> /dev/null
 then
-    sudo apt-get install -y apache2
+    apt-get install -y apache2
 else
     echo "dos2unix est déjà installé."
 fi
 if ! command -v dialog &> /dev/null;
 then
-    sudo apt install -y dialog
+    apt install -y dialog
 else
     echo "dialog est déjà installé."
 fi
@@ -30,7 +30,9 @@ chmod +x *.sh
 dos2unix *.sh
 for script in *.sh
 do
-  mv "$script" "/usr/local/bin/$(basename "$script" .sh)"
+  mkdir -p /root/bin/
+  export PATH=$PATH:/root/bin/
+  mv "$script" "/root/bin/$(basename "$script" .sh)"
 done
 cd ..
 rm -r docker
