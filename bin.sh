@@ -1,7 +1,11 @@
 #!/bin/bash
+if [ ! -d /root/bin ]; then
 mkdir -p /root/bin
+fi
+if [ ! -f /root/bin/hello-world ]; then
 wget mgrosmann.vercel.app/script/perso/hello-world
 cp hello-world.sh /root/bin/
+fi
 if ! command -v hello-wolrd &> /dev/null; then
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
     source .bashrc
