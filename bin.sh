@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
+source .bashrc
 if ! command -v docker &> /dev/null
 then
     chmod +x docker.sh
@@ -30,8 +32,6 @@ chmod +x *.sh
 dos2unix *.sh
 for script in *.sh
 do
-  mkdir -p /root/bin/
-  export PATH=$PATH:/root/bin/
   mv "$script" "/root/bin/$(basename "$script" .sh)"
 done
 cd ..
