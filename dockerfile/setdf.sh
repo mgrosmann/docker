@@ -2,6 +2,6 @@
 #If doesn't work execute command "DOCKER_BUILDKIT=0
 read -p "nom du conteneur: " name
 read -p "port du conteneur: " portd
-read -p "port a utiliser: " portd
+read -p "port a utiliser: " port
 docker image build -t $name .
 docker container run -d -p $port:$portd $name
