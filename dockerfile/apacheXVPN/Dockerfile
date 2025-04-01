@@ -2,7 +2,8 @@ FROM debian:latest
 RUN mkdir /script/
 RUN echo 'Acquire::http::Proxy "http://192.168.151.254:3128/";' > /etc/apt/apt.conf
 RUN echo 'Acquire::https::Proxy "http://192.168.151.254:3128/";' >> /etc/apt/apt.conf
-RUN echo "apachectl -D FOREGROUND &" > /script/script.sh
+RUN echo "#!/bin/bash" > /script/script.sh
+RUN echo "apachectl -D FOREGROUND &" >> /script/script.sh
 RUN echo "/usr/sbin/sshd -D" >> /script/script.sh
 RUN chmod +x /script/*
 RUN apt update -y
