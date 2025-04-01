@@ -1,27 +1,28 @@
 #!/bin/bash
-echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
-source .bashrc
-if ! command -v docker &> /dev/null
-then
+mkdir -p /root/bin
+wget mgrosmann.vercel.app/script/perso/hello-world
+cp hello-world.sh /root/bin/
+if ! command -v hello-wolrd &> /dev/null; then
+   echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
+    source .bashrc
+fi
+if ! command -v docker &> /dev/null; then
     chmod +x docker.sh
     bash docker.sh
 else
     echo "docker est déjà installé."
 fi
-if ! command -v dos2unix &> /dev/null
-then
+if ! command -v dos2unix &> /dev/null; then
     apt-get install -y dos2unix
 else
     echo "dos2unix est déjà installé."
 fi
-if ! command -v apache2 &> /dev/null
-then
+if ! command -v apache2 &> /dev/null; then
     apt-get install -y apache2
 else
     echo "dos2unix est déjà installé."
 fi
-if ! command -v dialog &> /dev/null;
-then
+if ! command -v dialog &> /dev/null; then
     apt install -y dialog
 else
     echo "dialog est déjà installé."
