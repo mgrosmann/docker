@@ -3,8 +3,10 @@ if [ ! -d /root/bin ]; then
 mkdir -p /root/bin
 fi
 if [ ! -f /root/bin/hello-world ]; then
-wget mgrosmann.vercel.app/script/perso/hello-world
-cp hello-world.sh /root/bin/
+echo "#!/bin/bash" > /roob/bin/hello-world 
+echo 'echo "hello world !!!" ' >> /root/bin/hello-world
+else
+    echo "le repertoire root/bin est déja ajouté au PATH."
 fi
 if ! command -v hello-wolrd &> /dev/null; then
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
@@ -21,18 +23,12 @@ if ! command -v dos2unix &> /dev/null; then
 else
     echo "dos2unix est déjà installé."
 fi
-if ! command -v apache2 &> /dev/null; then
-    apt-get install -y apache2
-else
-    echo "dos2unix est déjà installé."
-fi
 if ! command -v dialog &> /dev/null; then
     apt install -y dialog
 else
     echo "dialog est déjà installé."
 fi
 rm Docker.sh
-rm deb_docker.sh
 chmod +x *.sh
 dos2unix *.sh
 for script in *.sh
