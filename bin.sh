@@ -2,7 +2,7 @@
 if ! command -v hello-world &> /dev/null; then
    if [ ! -f /root/bin/hello-world ]; then
        mkdir -p /root/bin
-       echo "#!/bin/bash" > /root/bin/hello-world 
+       echo "#!/bin/bash" > /root/bin/hello-world
        echo 'echo "hello world !!!" ' >> /root/bin/hello-world
        chmod +x /root/bin/*
    fi
@@ -38,3 +38,4 @@ done
 cd ..
 rm -r docker
 echo "lancer la commande 'dcs' pour lancer l'outil centralisé"
+echo "réeffectuez un 'source ~/.bashrc'"
