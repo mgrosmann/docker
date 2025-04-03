@@ -4,6 +4,7 @@ if ! command -v hello-world &> /dev/null; then
        mkdir -p /root/bin
        echo "#!/bin/bash" > /roob/bin/hello-world 
        echo 'echo "hello world !!!" ' >> /root/bin/hello-world
+       chmod +x /root/bin/*
    fi
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
    source ~/.bashrc
