@@ -8,7 +8,7 @@ echo 'echo "hello world !!!" ' >> /root/bin/hello-world
 else
     echo "le repertoire root/bin est déja ajouté au PATH."
 fi
-if ! command -v hello-wolrd &> /dev/null; then
+if ! command -v hello-world &> /dev/null; then
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
     source .bashrc
 fi
