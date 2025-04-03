@@ -1,16 +1,15 @@
 #!/bin/bash
-if [ ! -d /root/bin ]; then
-mkdir -p /root/bin
-fi
-if [ ! -f /root/bin/hello-world ]; then
-echo "#!/bin/bash" > /roob/bin/hello-world 
-echo 'echo "hello world !!!" ' >> /root/bin/hello-world
-else
-    echo "le repertoire root/bin est déja ajouté au PATH."
-fi
 if ! command -v hello-world &> /dev/null; then
+   if [ ! -f /root/bin/hello-world ]; then
+       mkdir -p /root/bin
+       echo "#!/bin/bash" > /roob/bin/hello-world 
+       echo 'echo "hello world !!!" ' >> /root/bin/hello-world
+   fi
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
-    source .bashrc
+   source .bashrc
+   hello-world
+else
+    echo "le PATH est fonctionnel pour l'outil"
 fi
 if ! command -v docker &> /dev/null; then
     chmod +x docker.sh
