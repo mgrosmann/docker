@@ -6,7 +6,7 @@ if ! command -v hello-world &> /dev/null; then
        echo 'echo "hello world !!!" ' >> /root/bin/hello-world
    fi
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
-   source .bashrc
+   source ~/.bashrc
    hello-world
 else
     echo "le PATH est fonctionnel pour l'outil"
