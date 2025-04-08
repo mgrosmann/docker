@@ -1,9 +1,9 @@
 #!/bin/bash
-if ! command -v hello-world &> /dev/null; then
-   if [ ! -f /root/bin/hello-world ]; then
+if ! command -v hw &> /dev/null; then
+   if [ ! -f /root/bin/hw ]; then
        mkdir -p /root/bin
-       echo "#!/bin/bash" > /root/bin/hello-world
-       echo 'echo "hello world !!!" ' >> /root/bin/hello-world
+       echo "#!/bin/bash" > /root/bin/hw
+       echo 'echo "hello world !!!" ' >> /root/bin/hw
        chmod +x /root/bin/*
    fi
    echo "export PATH=$PATH:/root/bin" >> /root/.bashrc
