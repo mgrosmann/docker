@@ -1,50 +1,77 @@
 #!/bin/bash
-choix=$(dialog --clear --backtitle "Gestion des sites et conteneurs Docker" \
+choix=$(dialog --clear --backtitle "ipconfig" \
     --title "Menu Principal" \
-    --menu "Voulez-vous créer un nouveau conteneur/site ou associer un dossier existant ?" 15 50 2 \
-    1 "Créer un nouveau conteneur/site" \
-    2 "Associer un dossier existant" \
+    --menu "Quel type de configuration IP souhaitez-vous ?" 15 50 2 \
+    1 "Statique" \
+    2 "DHCP" \
     2>&1 >/dev/tty)
-if [ $? -ne 0 ]; then
-    compose_aio
-    exit
-fi
-    
 if [ "$choix" -eq 1 ]; then
-    site_name=$(dialog --inputbox "Entrez le nom du nouveau conteneur/site :" 8 50 2>&1 >/dev/tty)
-    site_port=$(dialog --inputbox "Entrez le port pour le nouveau site :" 8 50 2>&1 >/dev/tty)
+    interface=$(dialog --inputbox "Entrez l'interface réseau à configurer :" 8 50 2>&1 >/dev/tty)
+    ip=$(dialog --inputbox "Entrez l'adresse IP à affecter (format CIDR, ex: 192.168.1.1/24) :" 8 50 2>&1 >/dev/tty)
+    gateway=$(dialog --inputbox "Entrez la passerelle par défaut :" 8 50 2>&1 >/dev/tty)
+    dns=$(dialog --inputbox "Entrez le serveur DNS principal :" 8 50 2>&1 >/dev/tty)
+    linux=$(dialog --clear --backtitle "Distribution Linux" \
+        --title "Choix de la distribution Linux" \
+        --menu "Quelle distribution Linux utilisez-vous ?" 15 50 2 \
+        1 "Debian" \
+        2 "Ubuntu" \
+        2>&1 >/dev/tty)
+    if [ "$linux" -eq 1 ]; then
+        echo "  # Configuration réseau statique
+  source /etc/network/interfaces.d/*
+  
+  auto lo
+  iface lo inet loopback
 
-    cat <<EOF > compose_$site_name.yaml
-services:
-  $site_name:
-    container_name: $site_name
-    image: httpd
-    ports:
-      - "$site_port:80"
-    networks:
-      - "apache_network"
-networks:
-  apache_network:
-EOF
-
-    mkdir -p "docker_webfile/$site_name"
-    echo "bienvenue sur $site_name situe sur le port $site_port" > "docker_webfile/$site_name/index.html"
-    docker compose -f "compose_$site_name.yaml" up -d
-    FILE_PATH="/usr/local/apache2/htdocs"
-    docker exec "$site_name" rm -rf "$FILE_PATH"
-    docker cp "docker_webfile/$site_name" "$site_name:/usr/local/apache2/htdocs"
-    dialog --msgbox "Le nouveau conteneur/site $site_name a été créé et configuré avec succès sur le port $site_port." 8 50
-
-elif [ "$choix" -eq 2 ]; then
-    repertory_html=$(dialog --inputbox "Entrez le répertoire du dossier à importer :" 8 50 2>&1 >/dev/tty)
-    site_name=$(dialog --inputbox "Entrez le nom du conteneur à associer au dossier importé :" 8 50 2>&1 >/dev/tty)
-    FILE_PATH="/usr/local/apache2/htdocs"
-    docker exec "$site_name" rm -rf "$FILE_PATH"
-    docker cp "$repertory_html" "$site_name:/usr/local/apache2/htdocs"
-    dialog --msgbox "Le dossier $repertory_html a été associé avec succès au site $site_name." 8 50
-
+  allow-hotplug $interface
+  iface $interface inet static
+      address $ip
+      gateway $gateway
+      dns-nameservers $dns" > /etc/network/interfaces
+        systemctl restart networking.service
+    else
+        echo "network:
+    version: 2
+    ethernets:
+      $interface:
+        addresses:
+          - $ip
+        routes:
+          - to: default
+            via: $gateway
+        nameservers:
+          addresses:
+            - $dns" > /etc/netplan/50-cloud-init.yaml
+        apt install openvswitch-switch -y
+        netplan apply
+    fi
 else
-    dialog --msgbox "Choix incorrect. Veuillez réessayer." 8 50
-fi
+    interface=$(dialog --inputbox "Entrez l'interface réseau à configurer :" 8 50 2>&1 >/dev/tty)
+    linux=$(dialog --clear --backtitle "Distribution Linux" \
+        --title "Choix de la distribution Linux" \
+        --menu "Quelle distribution Linux utilisez-vous ?" 15 50 2 \
+        1 "Debian" \
+        2 "Ubuntu" \
+        2>&1 >/dev/tty)
+    if [ "$linux" -eq 1 ]; then
+        echo "# Configuration réseau DHCP
+  source /etc/network/interfaces.d/*
+  
+  auto lo
+  iface lo inet loopback
 
-clear
+  allow-hotplug $interface
+  iface $interface inet dhcp" > /etc/network/interfaces
+        systemctl restart networking.service
+    else
+        echo "network:
+    version: 2
+    ethernets:
+      $interface:
+        dhcp4: true" > /etc/netplan/50-cloud-init.yaml
+        apt install openvswitch-switch -y
+        netplan apply
+    fi
+fi
+echo "Configuration IP appliquée"
+hostname -I
